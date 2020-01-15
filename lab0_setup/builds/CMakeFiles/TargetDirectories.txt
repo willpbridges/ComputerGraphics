@@ -1,0 +1,3 @@
+C:/Users/Will Bridges/ComputerGraphics/lab0_setup/builds/CMakeFiles/Lab0.dir
+C:/Users/Will Bridges/ComputerGraphics/lab0_setup/builds/CMakeFiles/ALL_BUILD.dir
+C:/Users/Will Bridges/ComputerGraphics/lab0_setup/builds/CMakeFiles/ZERO_CHECK.dir
