@@ -16,6 +16,7 @@
 
 // Load our libraries
 #include <iostream>
+#include <algorithm>
 
 // Some define values
 #define WINDOW_HEIGHT 320
@@ -85,7 +86,7 @@ int main(){
     Vec2 line[2] = {Vec2(0,0), Vec2(100,100)};
 
     // Set the fill mode
-    glPolygonMode(FILL);
+    glPolygonMode(LINE);
 
     // Draw a line
     drawLine(line[0],line[1],canvas,red);
