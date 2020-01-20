@@ -17,10 +17,9 @@ PPM::PPM(std::string fileName){
 		std::getline(inFile, line);
 
 		//skip the comments
-		std::getline(inFile, line);
-		while (line[0] == '#') {
+		do {
 			std::getline(inFile, line);
-		}
+		} while (line[0] == '#');
 
 		//get the width and height
 		std::size_t found = line.find(" ");
@@ -29,7 +28,7 @@ PPM::PPM(std::string fileName){
 		m_width = std::stoi(width);
 		m_height = std::stoi(height);
 
-		//get the max color value
+		//get the max color value and scale it to 255
 		std::getline(inFile, line);
 		unsigned char maxValue = stoi(line);
 		float scale = 255.0 / maxValue;
@@ -38,11 +37,19 @@ PPM::PPM(std::string fileName){
 		m_PixelData = new unsigned char[m_width * m_height * 3];
 		int i = 0;
 		while (getline(inFile, line)) {
-			unsigned char curr = std::stoi(line);
-			m_PixelData[i] = curr * scale;
-			i++;
+			char* lineCopy = new char[line.size() + 1];
+			char* lineToken;
+			std::strcpy(lineCopy, line.c_str());
+			lineToken = std::strtok(lineCopy, " ");
+			while (lineToken != NULL) {
+				//get next RGB value and scale it up to 255
+				unsigned char curr = std::stoi(lineToken);
+				m_PixelData[i] = curr * scale;
+				i++;
+				lineToken = std::strtok(NULL, " ");
+			}
+			delete[] lineCopy;
 		}
-		//std::cout << (int)m_PixelData[95710] << std::endl << (int)m_PixelData[95715] << std::endl << (int)m_PixelData[95729] << std::endl;
 	}
 	inFile.close();
 }
@@ -66,7 +73,6 @@ void PPM::savePPM(std::string outputFileName){
 		}
 	}
 	outFile.close();
-	return;
 }
 
 // Darken subtracts 50 from each of the red, green
@@ -88,6 +94,4 @@ void PPM::setPixel(int x, int y, int R, int G, int B){
 	m_PixelData[pixel] = R;
 	m_PixelData[pixel + 1] = G;
 	m_PixelData[pixel + 2] = B;
-	std::cout << pixel << std::endl;
-	std::cout << (int)m_PixelData[pixel] << " " << (int)m_PixelData[pixel+1] << " " << (int)m_PixelData[pixel+2] << " " << std::endl;
 }
