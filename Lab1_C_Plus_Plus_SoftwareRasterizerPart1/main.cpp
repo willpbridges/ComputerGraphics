@@ -153,14 +153,14 @@ void triangle(Vec2 v0, Vec2 v1, Vec2 v2, TGA& image, ColorRGB c){
 // Main
 int main(){
     // A sample of color(s) to play with
-    ColorRGB red;
-    red.r = 0; red.g = 200; red.b = 200;
+    ColorRGB color1;
+    color1.r = 0; color1.g = 200; color1.b = 200;
 
-    ColorRGB green;
-    green.r = 255;  green.g = 115; green.b = 0;
+    ColorRGB color2;
+    color2.r = 255;  color2.g = 115; color2.b = 0;
 
-    ColorRGB blue;
-    blue.r = 128; blue.g = 0; blue.b = 128;
+    ColorRGB color3;
+    color3.r = 128; color3.g = 0; color3.b = 128;
 
     // Points for our Line
     Vec2 line[2] = {Vec2(0,0), Vec2(100,100)};
@@ -170,13 +170,13 @@ int main(){
 
     // Data for our triangle
     Vec2 tri[3] = {Vec2(30,60),Vec2(240,60),Vec2(160,10)};
-    triangle(tri[0],tri[1],tri[2],canvas,red);
+    triangle(tri[0],tri[1],tri[2],canvas,color1);
 
     Vec2 tri1[3] = {Vec2(100,100),Vec2(200,70),Vec2(300,300)};
-    triangle(tri1[0],tri1[1],tri1[2],canvas,green);
+    triangle(tri1[0],tri1[1],tri1[2],canvas,color2);
 
     Vec2 tri2[3] = {Vec2(10,200),Vec2(100,290),Vec2(170,200)};
-    triangle(tri2[0],tri2[1],tri2[2],canvas,blue);
+    triangle(tri2[0],tri2[1],tri2[2],canvas,color3);
 
     // Output the final image
     canvas.outputTGAImage("graphics_lab2.ppm");
