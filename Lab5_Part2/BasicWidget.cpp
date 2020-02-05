@@ -208,6 +208,10 @@ void BasicWidget::initializeGL()
   // TODO:  Generate our color buffer
   // ENDTODO
   // TODO:  Generate our index buffer
+  GLuint elementbuffer;
+  glGenBuffers(1, &elementbuffer);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, 12 * sizeof(unsigned int), &verts[0], GL_STATIC_DRAW);
   // ENDTODO
 
   // Create a VAO to keep track of things for us.
@@ -232,8 +236,14 @@ void BasicWidget::initializeGL()
   glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GL_FLOAT), verts, GL_STATIC_DRAW);
 
   // TODO:  Generate our color buffer
+  glGenBuffers(1, &cboID_);
+  glBindBuffer(GL_ARRAY_BUFFER, cboID_);
+  glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(GL_FLOAT), colors, GL_STATIC_DRAW);
   // ENDTODO
   // TODO:  Generate our index buffer
+  glGenBuffers(1, &iboID_);
+  glBindBuffer(GL_ARRAY_BUFFER, iboID_);
+  glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(GL_FLOAT), idx, GL_STATIC_DRAW);
   // ENDTODO
 
   vao_.release();
@@ -260,7 +270,7 @@ void BasicWidget::paintGL()
   shaderProgram_.bind();
   vao_.bind();
   // TODO: Change number of indices drawn
-  glDrawElements(GL_TRIANGLES, ??, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   // ENDTODO
   vao_.release();
   shaderProgram_.release();
@@ -287,7 +297,7 @@ void BasicWidget::paintGL()
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID_);
   // Render
   // TODO: Change number of indices drawn
-  glDrawElements(GL_TRIANGLES, ??, GL_UNSIGNED_INT, nullptr);
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
   // ENDTODO
   // Unbind everything
   glDisableVertexAttribArray(0);
