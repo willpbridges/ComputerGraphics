@@ -71,12 +71,7 @@ public:
 
 	// Make a matrix rotate about various axis
 	Matrix4f MakeRotationX(float t) {
-		/*
-		rx.Set(0,0, 1);         rx.Set(0,1,0);      rx.Set(0,2,0);  rx.Set(0,3,0); 
-        rx.Set(1,0, 0);         rx.Set(1,1,cos(x));      rx.Set(1,2,sin(x));  rx.Set(1,3,0);
-        rx.Set(2,0, 0);         rx.Set(2,1,-sin(x));      rx.Set(2,2,cos(x));  rx.Set(2,3,0);
-        rx.Set(3,0, 0);         rx.Set(3,1,0);      rx.Set(3,2,0);  rx.Set(3,3,1);
-		*/
+		
 		Matrix4f rotationX;
 		
 		rotationX[0][0] = 1;	rotationX[0][1] = 0;				rotationX[0][2] = 0;			rotationX[0][3] = 0;
@@ -90,12 +85,7 @@ public:
 	Matrix4f MakeRotationY(float t) {
 		// TODO:
 		Matrix4f rotationY;
-		/*
-		ry.Set(0,0, cos(y));         ry.Set(0,1,0);      ry.Set(0,2,-sin(y));  ry.Set(0,3,0); 
-        ry.Set(1,0, 0);         ry.Set(1,1,1);      ry.Set(1,2,0);  ry.Set(1,3,0);
-        ry.Set(2,0, sin(y));         ry.Set(2,1,0);      ry.Set(2,2,cos(y));  ry.Set(2,3,0);
-        ry.Set(3,0, 0);         ry.Set(3,1,0);      ry.Set(3,2,0);  ry.Set(3,3,1);
-		*/
+	
 		rotationY[0][0] = std::cos(t);	rotationY[0][1] = 0;		rotationY[0][2] = -std::sin(t);		rotationY[0][3] = 0;
 		rotationY[1][0] = 0;			rotationY[1][1] = 1;		rotationY[1][2] = 0;				rotationY[1][3] = 0;
 		rotationY[2][0] = std::sin(t);	rotationY[2][1] = 0;		rotationY[2][2] = std::cos(t);		rotationY[2][3] = 0;
@@ -107,12 +97,7 @@ public:
 	Matrix4f MakeRotationZ(float t) {
 		// TODO:
 		Matrix4f rotationZ;
-		/*
-		rz.Set(0, 0, cos(z));         rz.Set(0, 1, sin(z));      rz.Set(0, 2, 0);  rz.Set(0, 3, 0);
-		rz.Set(1, 0, -sin(z));         rz.Set(1, 1, cos(z));      rz.Set(1, 2, 0);  rz.Set(1, 3, 0);
-		rz.Set(2, 0, 0);         rz.Set(2, 1, 0);      rz.Set(2, 2, 1);  rz.Set(2, 3, 0);
-		rz.Set(3, 0, 0);         rz.Set(3, 1, 0);      rz.Set(3, 2, 0);  rz.Set(3, 3, 1)
-		*/
+		
 		rotationZ[0][0] = std::cos(t);		rotationZ[0][1] = std::sin(t);		rotationZ[0][2] = 0;		rotationZ[0][3] = 0;
 		rotationZ[1][0] = -std::sin(t);		rotationZ[1][1] = std::cos(t);		rotationZ[1][2] = 0;		rotationZ[1][3] = 0;
 		rotationZ[2][0] = 0;				rotationZ[2][1] = 0;				rotationZ[2][2] = 1;		rotationZ[2][3] = 0;
