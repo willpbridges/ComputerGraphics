@@ -145,9 +145,11 @@ void BasicWidget::keyReleaseEvent(QKeyEvent* keyEvent)
   // Handle key events here.
   if (keyEvent->key() == Qt::Key_Left) {
     qDebug() << "Left Arrow Pressed";
-    update();  // We call update after we handle a key press to trigger a redraw when we are ready
+	indices = 3;
+	update();// We call update after we handle a key press to trigger a redraw when we are ready
   } else if (keyEvent->key() == Qt::Key_Right) {
     qDebug() << "Right Arrow Pressed";
+	indices = 6;
     update();  // We call update after we handle a key press to trigger a redraw when we are ready
   } else {
     qDebug() << "You Pressed an unsupported Key!";
@@ -207,12 +209,19 @@ void BasicWidget::initializeGL()
 
   // TODO:  Generate our color buffer
   // ENDTODO
+  cbo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+  cbo_.create();
+  cbo_.bind();
+  cbo_.allocate(colors, 16 * sizeof(GL_FLOAT));
+
   // TODO:  Generate our index buffer
-  GLuint elementbuffer;
-  glGenBuffers(1, &elementbuffer);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, 12 * sizeof(unsigned int), &verts[0], GL_STATIC_DRAW);
   // ENDTODO
+  ibo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
+  ibo_.create();
+  ibo_.bind();
+  ibo_.allocate(idx, 6 * sizeof(GL_FLOAT));
+
+
 
   // Create a VAO to keep track of things for us.
   vao_.create();
@@ -270,7 +279,7 @@ void BasicWidget::paintGL()
   shaderProgram_.bind();
   vao_.bind();
   // TODO: Change number of indices drawn
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, indices, GL_UNSIGNED_INT, 0);
   // ENDTODO
   vao_.release();
   shaderProgram_.release();
@@ -297,7 +306,7 @@ void BasicWidget::paintGL()
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID_);
   // Render
   // TODO: Change number of indices drawn
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+  glDrawElements(GL_TRIANGLES, indices, GL_UNSIGNED_INT, nullptr);
   // ENDTODO
   // Unbind everything
   glDisableVertexAttribArray(0);

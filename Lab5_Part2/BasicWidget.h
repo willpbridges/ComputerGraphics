@@ -5,7 +5,7 @@
 #include <QtOpenGL>
 
 // TODO:  This macro should work when both true AND false
-#define USE_QT_OPENGL false
+#define USE_QT_OPENGL true
 // ENDTODO
 
 /**
@@ -20,6 +20,7 @@ private:
   QString fragmentShaderString() const;
   void createShader();
   QOpenGLVertexArrayObject vao_;
+  int indices = 6;
 
 protected:
   // Required interaction overrides
