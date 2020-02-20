@@ -51,9 +51,14 @@ ModelParser::ModelParser(std::string filename) {
 			std::strcpy(lineCStr, lineAsString.c_str());
 			char* lineToken;
 			lineToken = std::strtok(lineCStr, "f// ");
+			int i = 1;
 			while (lineToken != NULL) {
 				GLuint curr = std::stoi(lineToken) - 1;
-				indices.push_back(curr);
+				//Disregard the normals (for now). We just want vertex indices.
+				if (i % 2 == 1) {
+					indices.push_back(curr);
+				}
+				i++;
 				lineToken = std::strtok(NULL, "f// ");
 			}
 		}

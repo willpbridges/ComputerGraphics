@@ -38,7 +38,7 @@ QString BasicWidget::vertexShaderString() const
 
 		"void main()\n"
 		"{\n"
-		"  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);\n"
+		"  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1);\n"
 		"  vertColor = wireFrameColor;\n"
 		"}\n";
 	return str;
@@ -94,8 +94,10 @@ void BasicWidget::keyReleaseEvent(QKeyEvent* keyEvent) {
 		vbo_.allocate(&vertices[0], vertices.size() * sizeof(GL_FLOAT));
 		ibo_.bind();
 		ibo_.allocate(indices.constData(), indices.size() * sizeof(GL_UNSIGNED_INT));
+		/*
 		nbo_.bind();
 		nbo_.allocate(&vertices[0], normals.size() * sizeof(GL_FLOAT));
+		*/
 		update();
 
 	}
@@ -114,8 +116,10 @@ void BasicWidget::keyReleaseEvent(QKeyEvent* keyEvent) {
 		vbo_.allocate(vertices.constData(), vertices.size() * sizeof(GL_FLOAT));
 		ibo_.bind();
 		ibo_.allocate(indices.constData(), indices.size() * sizeof(GL_UNSIGNED_INT));
+		/*
 		nbo_.bind();
 		nbo_.allocate(&vertices[0], normals.size() * sizeof(GL_FLOAT));
+		*/
 		update();
 
 	}
@@ -167,12 +171,14 @@ void BasicWidget::initializeGL()
 	vbo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	vbo_.bind();
 	vbo_.allocate(vertices.constData(), vertices.size() * sizeof(GL_FLOAT));
-
-	//set up the normal buffer
+	
+	//set up the normal buffer/
+	/*
 	nbo_.create();
 	nbo_.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	nbo_.bind();
 	nbo_.allocate(normals.constData(), normals.size() * sizeof(GL_FLOAT));
+	*/
 
 	//set up the index buffer
 	ibo_.create();
@@ -180,13 +186,12 @@ void BasicWidget::initializeGL()
 	ibo_.bind();
 	ibo_.allocate(indices.constData(), indices.size() * sizeof(GL_UNSIGNED_INT));
 
-	//set up the vertex array object
 	vao_.create();
 	vao_.bind();
 	vbo_.bind();
-
 	shaderProgram_.enableAttributeArray(0);
 	shaderProgram_.setAttributeBuffer(0, GL_FLOAT, 0, 3, 3 * sizeof(GL_FLOAT));
+
 	ibo_.bind();
 	vao_.release();
 	shaderProgram_.release();
@@ -204,19 +209,16 @@ void BasicWidget::resizeGL(int w, int h)
 		0, 0, 1, 0,
 		0, 0, 0, 1);
 
-	view_.lookAt(QVector3D(1, 0, 4),
-		QVector3D(0, 0, 0),
+	view_.lookAt(QVector3D(1, 0.5f, 3),
+		QVector3D(0, 0.5f, 0),
 		QVector3D(0, 1, 0)
 	);
 
-	projection_.perspective(45.0f, (float)w / h, 0.1f, 100.0f);
-
+	projection_.perspective(45.0f, (float)w/h, 0.1f, 100.0f);
 	shaderProgram_.bind();
-
 	shaderProgram_.setUniformValue("modelMatrix", model_);
 	shaderProgram_.setUniformValue("viewMatrix", view_);
 	shaderProgram_.setUniformValue("projectionMatrix", projection_);
-
 	shaderProgram_.release();
 }
 
