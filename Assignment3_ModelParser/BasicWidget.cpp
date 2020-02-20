@@ -91,7 +91,7 @@ void BasicWidget::keyReleaseEvent(QKeyEvent* keyEvent) {
 		indices = bunny.getIndices();
 		normals = bunny.getNormals();
 		vbo_.bind();
-		vbo_.allocate(&vertices[0], vertices.size() * sizeof(GL_FLOAT));
+		vbo_.allocate(vertices.constData(), vertices.size() * sizeof(GL_FLOAT));
 		ibo_.bind();
 		ibo_.allocate(indices.constData(), indices.size() * sizeof(GL_UNSIGNED_INT));
 		/*
