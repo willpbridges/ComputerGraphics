@@ -39,15 +39,15 @@ void BasicWidget::initializeGL()
 
   qDebug() << QDir::currentPath();
   QString texFile = "../../cat3.ppm";
-  QVector<QVector3D> pos1;
-  QVector<QVector3D> pos2;
+  QVector<QVector3D> pos;
   QVector<QVector3D> norm;
   QVector<QVector2D> texCoord;
   QVector<unsigned int> idx;
-  pos1 << QVector3D(-2, -2, 0);
-  pos1 << QVector3D(2, -2, 0);
-  pos1 << QVector3D(-2, 2, 0);
-  pos1 << QVector3D(2, 2, 0);
+  QMatrix4x4 translation;
+  pos << QVector3D(-1, -1, 0);
+  pos << QVector3D(1, -1, 0);
+  pos << QVector3D(-1, 1, 0);
+  pos << QVector3D(1, 1, 0);
 
   // We don't actually use the normals right now, but this will be useful later!
   norm << QVector3D(0.0f, 0.0f, 1.0f);
@@ -61,17 +61,16 @@ void BasicWidget::initializeGL()
   texCoord << QVector2D(1, 0);
   texCoord << QVector2D(0, 0);
 
-  pos2 << QVector3D(-1, -1, 0);
-  pos2 << QVector3D(1, -1, 0);
-  pos2 << QVector3D(-1, 1, 0);
-  pos2 << QVector3D(1, 1, 0);  
-
   idx << 0 << 1 << 2 << 2 << 1 << 3;
 
   Renderable* ren1 = new Renderable();
   Renderable* ren2 = new Renderable();
-  ren1->init(pos1, norm, texCoord, idx, texFile);
-  ren2->init(pos2, norm, texCoord, idx, texFile);
+  ren1->init(pos, norm, texCoord, idx, texFile);
+  translation.translate(-pos[0]);
+  ren1->setModelMatrix(translation);
+  ren2->init(pos, norm, texCoord, idx, texFile);
+  translation.translate(pos[0] * 2);
+  ren2->setModelMatrix(translation);
   renderables_.push_back(ren1);
   renderables_.push_back(ren2);
   glViewport(0, 0, width(), height());
