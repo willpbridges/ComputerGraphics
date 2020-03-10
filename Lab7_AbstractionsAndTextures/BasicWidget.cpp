@@ -39,25 +39,41 @@ void BasicWidget::initializeGL()
 
   qDebug() << QDir::currentPath();
   QString texFile = "../../cat3.ppm";
-  QVector<QVector3D> pos;
+  QVector<QVector3D> pos1;
+  QVector<QVector3D> pos2;
   QVector<QVector3D> norm;
   QVector<QVector2D> texCoord;
   QVector<unsigned int> idx;
-  pos << QVector3D(-0.8, -0.8, 0.0);
-  pos << QVector3D(0.8, -0.8, 0.0);
-  pos << QVector3D(-0.8, 0.8, 0.0);
-  pos << QVector3D(0.8, 0.8, 0.0);
+  pos1 << QVector3D(-2, -2, 0);
+  pos1 << QVector3D(2, -2, 0);
+  pos1 << QVector3D(-2, 2, 0);
+  pos1 << QVector3D(2, 2, 0);
+
   // We don't actually use the normals right now, but this will be useful later!
-  norm << QVector3D(0.0, 0.0, 1.0);
-  norm << QVector3D(0.0, 0.0, 1.0);
-  norm << QVector3D(0.0, 0.0, 1.0);
-  norm << QVector3D(0.0, 0.0, 1.0);
+  norm << QVector3D(0.0f, 0.0f, 1.0f);
+  norm << QVector3D(0.0f, 0.0f, 1.0f);
+  norm << QVector3D(0.0f, 0.0f, 1.0f);
+  norm << QVector3D(0.0f, 0.0f, 1.0f);
+
   // TODO:  Make sure to add texture coordinates to pass into the initialization of our renderable
+  texCoord << QVector2D(1, 1);
+  texCoord << QVector2D(0, 1);
+  texCoord << QVector2D(1, 0);
+  texCoord << QVector2D(0, 0);
+
+  pos2 << QVector3D(-1, -1, 0);
+  pos2 << QVector3D(1, -1, 0);
+  pos2 << QVector3D(-1, 1, 0);
+  pos2 << QVector3D(1, 1, 0);  
+
   idx << 0 << 1 << 2 << 2 << 1 << 3;
 
-  Renderable* ren = new Renderable();
-  ren->init(pos, norm, texCoord, idx, texFile);
-  renderables_.push_back(ren);
+  Renderable* ren1 = new Renderable();
+  Renderable* ren2 = new Renderable();
+  ren1->init(pos1, norm, texCoord, idx, texFile);
+  ren2->init(pos2, norm, texCoord, idx, texFile);
+  renderables_.push_back(ren1);
+  renderables_.push_back(ren2);
   glViewport(0, 0, width(), height());
   frameTimer_.start();
 }
@@ -77,11 +93,11 @@ void BasicWidget::resizeGL(int w, int h)
     }
   glViewport(0, 0, w, h);
   view_.setToIdentity();
-  view_.lookAt(QVector3D(0.0f, 0.0f, 2.0f),
+  view_.lookAt(QVector3D(0.0f, 0.0f, 4.0f),
       QVector3D(0.0f, 0.0f, 0.0f),
       QVector3D(0.0f, 1.0f, 0.0f));
   projection_.setToIdentity();
-  projection_.perspective(70.f, (float)w/(float)h, 0.001, 1000.0);
+  projection_.perspective(70.f, (float)w/(float)h, 0.001f, 1000.0f);
   glViewport(0, 0, w, h);
 }
 
