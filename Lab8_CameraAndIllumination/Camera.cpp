@@ -3,6 +3,7 @@
 Camera::Camera() : position_(0.0, 0.0, 0.0), lookAt_(0.0, 0.0, 0.0), up_(0.0, 1.0, 0.0)
 {
 	projection_.setToIdentity();
+
 }
 
 Camera::~Camera()
@@ -26,7 +27,7 @@ QVector3D Camera::position() const
 
 void Camera::translateCamera(const QVector3D& delta)
 {
-	// TODO:  Implement camera translation
+	setPosition(position_ + delta);
 }
 
 void Camera::setGazeVector(const QVector3D& gaze)
