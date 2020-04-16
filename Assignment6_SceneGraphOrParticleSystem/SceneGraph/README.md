@@ -103,6 +103,9 @@ the final position of an object in world space? Note: There is a handy
 information on scenegraphs which may help you answer.
   
 **Answer here**: *Your answer here*
+Storing the local and world transformations of an object is far more efficient.
+If we didn't store the world transform, then we'd have to traverse the object
+tree every time we needed it, which would be very costly.
   
 ## How to run your program
 
