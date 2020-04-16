@@ -17,7 +17,10 @@ include_directories(
 )
 
 set(srcs
+  BasicWidget.cpp
+  Application.cpp
   main.cpp
+  ModelParser.cpp
 )
 
 add_executable(App
